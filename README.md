@@ -102,8 +102,9 @@ Following the method used in the prior example above a similar function was crea
 >Testing the function: 
 ```
 peak('Massachusetts', 'Connecticut')
-```
+
 Massachusetts had its highest number of daily new cases by 3 days
+```
 
 ##Exercise 4
 ```
