@@ -93,9 +93,9 @@ print(highest_case('Washington'))
 print(highest_case('Illinois'))
 print(highest_case('Massachusetts'))
 
-2022-09-16 00:00:00
-2022-09-16 00:00:00
-2022-09-15 00:00:00
+2022-01-18 00:00:00
+2022-01-18 00:00:00
+2022-01-10 00:00:00
 ```
 Following the method used in the prior example above a similar function was created using the highest_case function from above to calculate which state has the highest number of new cases when compared. Furthermore, the if and else statement was used to print which state has the highest number of daily new cases by a number of days, which were calculated using the abs() function and looking at the difference between two dates (of two different states).
 
@@ -103,9 +103,11 @@ Following the method used in the prior example above a similar function was crea
 ```
 peak('Massachusetts', 'Connecticut')
 peak('Florida', 'Washington')
+peak('California','Connecticut')
 
-Massachusetts had its highest number of daily new cases by 3 days
-Florida and Washington had its highest number of daily new cases on 2022-09-21
+Massachusetts and Connecticut had its highest number of daily new cases on 2022-01-10 
+Florida had its highest number of daily new cases by 14 days
+Ohio had its highest number of daily new cases by 9 days
 ```
 
 ##Exercise 4
