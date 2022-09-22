@@ -102,8 +102,10 @@ Following the method used in the prior example above a similar function was crea
 >Testing the function: 
 ```
 peak('Massachusetts', 'Connecticut')
+peak('Florida', 'Washington')
 
 Massachusetts had its highest number of daily new cases by 3 days
+Florida and Washington had its highest number of daily new cases on 2022-09-21
 ```
 
 ##Exercise 4
