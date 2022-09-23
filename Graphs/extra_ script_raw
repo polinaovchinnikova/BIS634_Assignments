@@ -1,0 +1,80 @@
+# Exercise 1: 
+def temp_tester(temp):
+    
+ def range_temp_function(x): 
+    if x<= temp + 1 and x >= temp - 1:
+        return True 
+    else: 
+        return False
+    
+ return range_temp_function
+
+human_tester = temp_tester(37)
+chicken_tester = temp_tester(41.1)
+
+print(chicken_tester(42)) 
+print(human_tester(42))  
+print(chicken_tester(43)) 
+print(human_tester(35)) 
+print(human_tester(98.6)) 
+
+# Exercise 2: 
+import pandas as pd
+import sqlite3
+with sqlite3.connect("/Users/polina/Desktop/hw1-population.db") as db:
+    data = pd.read_sql_query("SELECT * FROM population", db)
+    data.head
+    data.head
+    data.describe()[["age"]]
+    ! conda install -c conda-forge plotnine -y
+    from plotnine import *
+import math 
+log2 = math.log2(152361)+1  
+log2
+data.hist(column = 'age', bins = 18)
+data.describe()[["weight"]]
+data.hist(column = 'weight', bins = 18)
+import plotly.express as px 
+fig = px.scatter(data, x="age", y="weight")
+fig.show()
+# Filter to detect outlier
+data[(data['age'] > 20) & ((data['weight'] < 40)|(data['weight'] > 100))]
+# Filter for Anthony Freeman
+data[(data['age'] == 41.3) | (data['weight'] == 21.7)]
+
+# Exercise 3: 
+import numpy as np
+from matplotlib import pyplot as plt
+import pandas as pd
+url = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv'
+df = pd.read_csv(url)
+df.head()
+# convert the 'Date' column to datetime format
+df['date']= pd.to_datetime(df['date'])
+# Check the format of 'Date' column
+df.info()
+#look for new cases 
+(df
+ .groupby(['state'])
+ .cases
+ .diff()
+)
+def plot(state_list):
+    plt.figure(figsize=(30,20))
+    for state in state_list:
+        df_new = df[df['state']==state]
+        df_new['cases'] = df_new['cases'].diff()
+        plt.plot(df_new['date'], df_new['cases'], label=state)
+    plt.legend()
+    plt.title('New Cases vs Date')
+    plt.xlabel('Date')
+    plt.ylabel('New Cases')
+    plt.show()
+    # Example to test plot function
+state_list = ['Wyoming', 'Northern Mariana Islands', 'Massachusetts', 'Connecticut']
+plot(state_list)
+def highest_case(state):
+    df_new_date = df[df["state"] == state]
+    df_new_date['cases'] = df_new_date['cases'].diff()
+    date = df_new_date[df_new_date['cases'] == np.max(df_new_date['cases'])]['date']
+    return date.iloc[0]    
