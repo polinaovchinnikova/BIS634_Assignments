@@ -16,8 +16,7 @@ human_tester(98.6)
 ```
 
 ##Exercise 2. 
-
->The dataset cointains are 4 columns and 152361 rows. Thus there 152,361 people in the pupulation with columns names 
+The dataset cointains are 4 columns and 152361 rows. Thus there 152,361 people in the pupulation with columns names 
 1. name
 2. age
 3. weight
