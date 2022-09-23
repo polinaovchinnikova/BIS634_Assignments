@@ -3,8 +3,8 @@
 ##Exercise 1.  
 - Code explanation: by using an inner function - range_temp_function(x), the temp_tester  checks the temperature in the range +/-1 degree of either a human or chicken temperature. Furthermore, the inner function allows us to print the result as either True for not having a fever or False to indicate the temperature is either too low or too high.
 - Testing: for the testing purpose the human temperature was set to 37, and the chicken's was 41.1. The code below shows  the testing process 
-```
 >Tesing code:
+```
 human_tester = temp_tester(37)
 chicken_tester = temp_tester(41.1)
 
