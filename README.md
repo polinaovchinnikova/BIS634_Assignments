@@ -111,7 +111,8 @@ print(highest_case('Massachusetts'))
 2022-01-18 00:00:00
 2022-01-10 00:00:00
 ```
-Following the method used in the prior example above a similar function was created using the highest_case function from above to calculate which state has the highest number of new cases when compared. Furthermore, the if and else statement was used to print which state has the highest number of daily new cases by a number of days, which were calculated using the abs() function and looking at the difference between two dates (of two different states).
+Following the method used in the prior example above a similar function was created using the highest_case function from above to calculate which state has the highest number of new cases when compared. Furthermore, the ```if```,  ```elif``` ,  ```else``` statement were used to print which state has the highest number of daily new cases by a number of days, which were calculated using the ```abs((df_peak_1 - df_peak_2).days``` function and looking at the difference between two dates (of two different states); those functions were created based on the above highest case example ```df_peak_1 = (highest_case(state1))
+    df_peak_2 = (highest_case(state2))```
 
 >Testing the function: 
 ```
