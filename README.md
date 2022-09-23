@@ -30,7 +30,7 @@ The dataset cointains are 4 columns and 152361 rows. Thus there 152,361 people i
 - Minimum = 0.000748
 - Maximum = 99.991547
 
-> Function data. describe() a variable was used to find out the statistical description of the varaible.
+Function ```data.describe()``` a variable was used to find out the statistical description of the varaible.
 
 Each bin is plotted as a bar whose height corresponds to how many data points are in that bin. Thus, we could use Sturges' Rule to calculate the optimal number of bins to use in a histigram: 
 
@@ -68,14 +68,28 @@ The scatter plot has a positive correlation to zero correlation as the graph ind
 - weight: 21.7
 
 The outlier was found using the plotly histogram that allows you to hover on the scatter plot dots and see their exact x and y values, thus by looking at the outlier on the closer to the bottom of the graph, his x and y values were given. Then, to print his name and excat patient id, a print function was used containing the  exact values for the age and weight that were noted by hovering over the outlier. Futhermore, to make sure for sure about outliers another filter was set to print the names of patients whose age is more than 20, and weights either less then 40 or more than a 100. 
+```
+# Filter to detect outlier
+data[(data['age'] > 20) & ((data['weight'] < 40)|(data['weight'] > 100))]
 
+537	Anthony Freeman	41.300000	21.700000	green
+43919	Mark Harris	50.339841	100.435793	brown
+122495	Courtney Nunn	65.799859	38.427617	brown
+124946	Douglas Garstka	59.795013	37.637555	blue
+```
+```
+# Filter for Anthony Freeman
+data[(data['age'] == 41.3) | (data['weight'] == 21.7)]
+
+537	Anthony Freeman	41.3	21.7	green
+```
 
 ##Exercise 3
 This data was taken [GitHub Pages](github.com/nytimes/covid-19-data).
 License:
 https://github.com/nytimes/covid-19-data
 
-To create the graphs first we had to convert the 'Date' column to DateTime format using the pandas to_datetime function. Then, the function to plot states new cases vs date. Creating a new dataset df_new, that stores the new cases allows us to use the function .diff(), which finds the first discrete difference of objects over the given cases. Then, the new dataset set is graphed using dates as the x-values, and cases as the y-values. Plus, to make sure it was readable different colors are assigned automatically to each state when graphed. 
+To create the graphs first we had to convert the 'Date' column to DateTime format using the pandas ```pd.to_datetime``` function. Then, the function to plot states new cases vs date. Creating a new dataset df_new, that stores the new cases allows us to use the function ```.diff()```, which finds the first discrete difference of objects over the given cases. Then, the new dataset set is graphed using dates as the x-values, and cases as the y-values. Plus, to make sure it was readable different colors are assigned automatically to each state when graphed. 
 
 > Testing the graph:
 ```
@@ -85,7 +99,7 @@ plot(state_list)
 ```
 ![](3_1.png)
 
-To create a function that takes the name of a state and returns the date of its highest number of new cases, we used a similar method as the one used for creating plots in the above example. We used to define new data and new variables that contain values for a maximum number of cases using the max() function. Furthermore, to insure that we only got one date for the maximum number of cases for each state a date.iloc[0] was used. 
+To create a function that takes the name of a state and returns the date of its highest number of new cases, we used a similar method as the one used for creating plots in the above example. We used to define new data and new variables that contain values for a maximum number of cases using the ```np.max()``` function. Furthermore, to insure that we only got one date for the maximum number of cases for each state a ```date.iloc[0]``` was used. Plus, it should be noted that ```.diff()``` was used to make sure that dates are not cumulating. 
 
 >Testing the function: 
 ```
@@ -113,23 +127,43 @@ Ohio had its highest number of daily new cases by 9 days
 ##Exercise 4
 ```
 import xml.etree.ElementTree as ET
+from pprint import pprint as pp 
 tree = ET.parse('/Users/polina/Desktop/desc2022.xml')
 root = tree.getroot()
 ```
-The function to find UI was built by first finding the first element of the child in DescriptorUI, by accessing an individual child. Then, the function run through all the root's children, and by knowing the individual child root ``` child[1][0]``` it was easier to write an if a function that would find a specific UI, which in our case was DescriptorUI 'D007154'.
+The function to find UI was built by first finding the first element of the child in DescriptorUI, by accessing an individual child. Then, the function run through all the root's children, and by knowing the individual child root ``` child[1][0]``` it was easier to write an if a function that would find a specific UI, which in our case was DescriptorUI 'D007154'. Futhermore, the ```for child in root``` was used in this function, to find if the ```if child[1][0].text == ui:``` to find the specific UI.
 
 >Testing the  function: 
 ```
 print(find_ui('D007154'))
 Immune System Diseases
 ```
-A similar function was used to find the 'Nervous System Diseases', as the only thing that has changed is  was instead of finding UI it found a DescriptorName. 
+A similar function was used to find the 'Nervous System Diseases', as the only thing that has changed  was instead of finding UI it found a DescriptorName. 
 
 >Testing the  function: 
 ```
 print(find_name('Nervous System Diseases'))
 D009422
 ```
+The function is build in the similar way as the ones above, where first function finds the Treenumber given either a DescriptorName or DescriptorUI. Also, to make it easier for the function, since all of the  uis begin with the letter D we could specify that in the loop to make the function look for the "D" uis.Then it runs throught a loop looking for the DescriptorName or DescriptorUI.
 
+>Testing the  function: 
+```
+print(treeNumber_find('Nervous System Diseases'))
+print(treeNumber_find('D007154'))
 
-The above search showed has found neighboring diseases that are part of the Nervous System Diseases and/or Immune System Diseases (D007154). Thus, diseases that are shown have a descendant relationship with the Nervous System Diseases and/or Immune System Diseases. 
+C10
+C20
+```
+>This shows that both diseases play the main disease in which there could be most of the descendants are due to either a nervous system and/or immune system disease. 
+
+Then to find the neighboring descendants we could write a similar function that would find the Treenumber for each of the names/UI. Plus, to find parents we could first write two new variables that would allow us to get the tree names for each of the names/UI.
+
+>Testing the  function: 
+```
+print(descendents_common('Nervous System Diseases', 'D007154'))
+
+{'AIDS Dementia Complex', 'Neuritis, Autoimmune, Experimental', 'Vasculitis, Central Nervous System', 'Demyelinating Autoimmune Diseases, CNS', 'Uveomeningoencephalitic Syndrome', 'Guillain-Barre Syndrome', 'Giant Cell Arteritis', 'Lupus Vasculitis, Central Nervous System', 'Neuromyelitis Optica', 'Leukoencephalitis, Acute Hemorrhagic', 'Miller Fisher Syndrome', 'Multiple Sclerosis, Chronic Progressive', 'Myasthenia Gravis, Neonatal', 'Autoimmune Hypophysitis', 'Multiple Sclerosis', 'Autoimmune Diseases of the Nervous System', 'Lambert-Eaton Myasthenic Syndrome', 'Myasthenia Gravis, Autoimmune, Experimental', 'Nervous System Autoimmune Disease, Experimental', 'Microscopic Polyangiitis', 'POEMS Syndrome', 'Stiff-Person Syndrome', 'AIDS Arteritis, Central Nervous System', 'Myasthenia Gravis', 'Polyradiculoneuropathy', 'Multiple Sclerosis, Relapsing-Remitting', 'Encephalomyelitis, Acute Disseminated', 'Diffuse Cerebral Sclerosis of Schilder', 'Anti-N-Methyl-D-Aspartate Receptor Encephalitis', 'Encephalomyelitis, Autoimmune, Experimental', 'Ataxia Telangiectasia', 'Polyradiculoneuropathy, Chronic Inflammatory Demyelinating', 'Myelitis, Transverse', 'Kernicterus', 'Mevalonate Kinase Deficiency'}
+```
+
+The above search has found neighboring diseases using the MeSH hierarchy that are part of the Nervous System Diseases and/or Immune System Diseases (D007154). Thus, diseases that are shown have a descendant relationship with the Nervous System Diseases and/or Immune System Diseases, which are also shown in hierarch order ( meaning the one that has more connection to either or disease are shown first).
