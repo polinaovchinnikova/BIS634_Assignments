@@ -116,3 +116,20 @@ import xml.etree.ElementTree as ET
 tree = ET.parse('/Users/polina/Desktop/desc2022.xml')
 root = tree.getroot()
 ```
+The function to find UI was built by first founding the first element of the child in DescriptorUI, by accessing an individual child. Then, the function run through all the root's children, and by knowing the individual child root it was easier to write an if a function that would find a specific UI, which in our case was DescriptorUI 'D007154'.
+
+>Testing the  function: 
+```
+print(find_ui('D007154'))
+Immune System Diseases
+```
+A similar function was used to find the 'Nervous System Diseases', as the only thing that has changed is  was instead of finding UI it found a DescriptorName. 
+
+>Testing the  function: 
+```
+print(find_name('Nervous System Diseases'))
+D009422
+```
+
+
+The above search showed has found neighboring diseases that are part of the Nervous System Diseases and/or Immune System Diseases (D007154). Thus, diseases that are shown have a descendant relationship with the Nervous System Diseases and/or Immune System Diseases. 
