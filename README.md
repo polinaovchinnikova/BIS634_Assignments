@@ -116,7 +116,7 @@ import xml.etree.ElementTree as ET
 tree = ET.parse('/Users/polina/Desktop/desc2022.xml')
 root = tree.getroot()
 ```
-The function to find UI was built by first founding the first element of the child in DescriptorUI, by accessing an individual child. Then, the function run through all the root's children, and by knowing the individual child root it was easier to write an if a function that would find a specific UI, which in our case was DescriptorUI 'D007154'.
+The function to find UI was built by first finding the first element of the child in DescriptorUI, by accessing an individual child. Then, the function run through all the root's children, and by knowing the individual child root ``` child[1][0]``` it was easier to write an if a function that would find a specific UI, which in our case was DescriptorUI 'D007154'.
 
 >Testing the  function: 
 ```
