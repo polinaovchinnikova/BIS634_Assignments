@@ -103,7 +103,7 @@ Following the method used in the prior example above a similar function was crea
 ```
 peak('Massachusetts', 'Connecticut')
 peak('Florida', 'Washington')
-peak('California','Connecticut')
+peak('Ohio','Montana')
 
 Massachusetts and Connecticut had its highest number of daily new cases on 2022-01-10 
 Florida had its highest number of daily new cases by 14 days
