@@ -31,7 +31,7 @@ def grad_descent_2D(unit_est, gamma, h, threshold):
 
 
 - Without knowing the exact function, we know the changing trend between parameters and loss, and we can calculate the gradient by calculating the derivative of loss and parameters (a, b). Loss decreases faster in the opposite direction of the gradient.
-- As a stopping condition, we used "'while norm"' when it is less than the threshold, which was set to 1e-8, and when the loop reaches the maximum value of 5000 iterations. Furthermore, based on slide 12, we set the small increment h/delta to 1e-4, which is small enough to be included in the derivative formula.
+- As a stopping condition, we used "'while norm"' when it is less than the threshold, which was set to 1e-8, and when the loop reaches the maximum value of 10000 iterations. Furthermore, based on slide 12, we set the small increment h/delta to 1e-4, which is small enough to be included in the derivative formula.
 
 
 2. Find both locations (i.e. a, b values) querying the API as needed and identify which corresponds to which. 
