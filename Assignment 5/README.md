@@ -365,5 +365,6 @@ def info():
 if __name__ == "__main__":
     app.run()
 ```
-
+![](Homepage.png)
+![](Info_Page.png)
 
