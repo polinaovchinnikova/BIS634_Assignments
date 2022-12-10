@@ -378,3 +378,4 @@ if __name__ == "__main__":
 ```
 
 ![](3.1.png)
+> apologize for a bad screenshoot had to use my friends lapton to run code as mine had to be taken to the service to get fixed 
