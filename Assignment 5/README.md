@@ -308,6 +308,29 @@ I am planning on overcoming those challenges by using the resources given to me 
 > Original data citation: https://statecancerprofiles.cancer.gov/incidencerates/index.php?stateFIPS=00&areatype=state&cancer=001&race=00&sex=0&age=001&stage=999&year=0&type=incd&sortVariableName=rate&sortOrder=default&output=0#results
 
 ```
+# https://moonbooks.org/Articles/How-to-remove-one-or-multiple-rows-in-a-pandas-DataFrame-in-python-/
+# https://stackoverflow.com/questions/13682044/remove-unwanted-parts-from-strings-in-a-column/22238380
+
+# remove rows that don't contain data 
+data = data.drop(data.index[53:74])
+
+# remove the number and brackets in the Stats
+data['State'] = data['State'].map(lambda x: x[:-3])
+# rename column for numbers taken form States 
+data = data.rename(columns = {" FIPS": "FIPS"})
+# edit the new column FIPS 
+#https://www.digitalocean.com/community/tutorials/update-rows-and-columns-python-pandas
+#https://stackoverflow.com/questions/12604909/pandas-how-to-change-all-the-values-of-a-column
+data['FIPS'] = (data['FIPS']/1000).map("{:,.0f}".format)
+# save the clean data into a CSV file 
+data.to_csv('clean_data.csv', index=False)
+```
+```
+clean_data = pd.read_csv("clean_data.csv")
+clean_data
+```
+2. Make the page
+```
 import pandas as pd
 import json
 
