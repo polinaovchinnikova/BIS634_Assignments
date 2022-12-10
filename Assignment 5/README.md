@@ -308,74 +308,62 @@ I am planning on overcoming those challenges by using the resources given to me 
 > Original data citation: https://statecancerprofiles.cancer.gov/incidencerates/index.php?stateFIPS=00&areatype=state&cancer=001&race=00&sex=0&age=001&stage=999&year=0&type=incd&sortVariableName=rate&sortOrder=default&output=0#results
 
 ```
-#https://moonbooks.org/Articles/How-to-remove-one-or-multiple-rows-in-a-pandas-DataFrame-in-python-/
-# https://stackoverflow.com/questions/13682044/remove-unwanted-parts-from-strings-in-a-column/22238380
-
-# remove rows that don't contain data 
-data = data.drop(data.index[53:74])
-
-# remove the number and brackets in the Stats
-data['State'] = data['State'].map(lambda x: x[:-3])
-
-# rename column for numbers taken form States 
-data = data.rename(columns = {" FIPS": "FIPS"})
-
-# edit the new column FIPS 
-#https://www.digitalocean.com/community/tutorials/update-rows-and-columns-python-pandas
-#https://stackoverflow.com/questions/12604909/pandas-how-to-change-all-the-values-of-a-column
-data['FIPS'] = (data['FIPS']/1000).map("{:,.0f}".format)
-
-# save the clean data into a CSV file 
-data.to_csv('clean_data.csv', index=False)
-
-clean_data = pd.read_csv("clean_data.csv")
-clean_data
-```
-For the flaks part, I have run in inot a few problems when trying to run the code
-
->An exception has occurred, use %tb to see the full traceback.SystemExit: 1
->Address already in use. Port 5000 is in use by another program.
-
-```
 import pandas as pd
-from flask import Flask, render_template, request
-from collections import Counter
+import json
 
-df = pd.read_csv("/Users/polina/Desktop/clean_data.csv")
+data = pd.read_csv("clean_data.csv")
 
-state_name_list = df["State"].to_list()
-rate_list = df["Age-Adjusted Incidence Rate([rate note]) - cases per 100,000"].to_list()
+age_adjusted_IR = data['Age-Adjusted Incidence Rate([rate note]) - cases per 100,000'].tolist()
+state_name1 = data['State'].tolist()
+state_name = []
+for state in state_name1:
+    state_name.append(state.lower())
 
-
+from flask import Flask, render_template, request, url_for
 app = Flask(__name__)
 
-
 @app.route("/")
-def index():
+def homepage():
     return render_template("index.html")
 
+@app.route("/state/<string:name>")
+def get_info():
+    dics = {}
+    for item in state_name:
+        dics[item] = age_adjusted_IR[state_name.index(item)]
+    json_object = json.dumps(dics)
+    return json_object
 
 @app.route("/info", methods=["GET"])
-def analyze():
-    usertext = request.args.get["usertext"]
-    if usertext in state_name_list[1:]:
-        i = state_name_list.index(usertext)
-        rate = str(rate_list[i])
+def info():
+    UserState = request.args.get("UserState")
+    result = ""
+    IR = 0
+    FIPS = 0
+    CI = ""
+    AAC = 0
+    rec_trend = ""
+    if UserState.lower().strip() in str(data['State']).lower():
+        i=0
+        for item in data['State']: 
+            print(item)
+            if UserState.lower().strip() == item.lower():
+                FIPS = data.iloc[i,2]
+                print(FIPS)
+                IR = data.iloc[i,3]
+                print(IR)
+                CI = "(" + str(data.iloc[i,4]) + "," + str(data.iloc[i,5]) + ")"
+                AAC = int(data.iloc[i,8])
+                rec_trend = data.iloc[i,9]
+            i+=1
+        result += f"State name: {UserState}, Age-Adjusted Incidence Rate - cases per 100,000  is {IR}.\n" 
+        return render_template("info.html", analysis = result, FIPS = FIPS, IR = IR, CI = CI, AAC = AAC, rec_trend = rec_trend, usertext = UserState)
     else:
-        rate = "Input a State"
-    return render_template("analyze.html", output = rate, usertext=usertext)
-
-@app.route("/state/<string:name>")
-def state_search(name):
-    i = state_name_list.index(name)
-    rate = rate_list[i]
-    state_search = "State: <u>" + name + "</u>. Age-Adjusted Incidence rate (cases per 100k) of <u>" + str(rate) + "</u>"
-    return state_search
-
+        return f"Error: name {UserState} is invalid.\n"
+        
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
 ```
 
-![](3.1.png)
-> apologize for a bad screenshoot had to use my friends lapton to run code as mine had to be taken to the service to get fixed 
+
